@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tutoring-service
+  namespace: htw-tutor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tutoring-service
+  template:
+    metadata:
+      labels:
+        app: tutoring-service
+    spec:
+      containers:
+        - name: tutoring-service
+          image: <your-dockerhub-username>/htw-tutoring-service:latest
+          ports:
+            - containerPort: 4002
+          env:
+            - name: PORT
+              value: "4002"
+            - name: MONGO_URI
+              value: "mongodb://mongo:27017/htw_tutoring"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: htw-secrets
+                  key: JWT_SECRET
+            - name: CLOUDINARY_CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: htw-secrets
+                  key: CLOUDINARY_CLOUD_NAME
+            - name: CLOUDINARY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: htw-secrets
+                  key: CLOUDINARY_API_KEY
+            - name: CLOUDINARY_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: htw-secrets
+                  key: CLOUDINARY_API_SECRET
+            - name: NOTIFICATION_FUNCTION_URL
+              value: "https://<your-site>.netlify.app/.netlify/functions/booking-notification"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tutoring-service
+  namespace: htw-tutor
+spec:
+  selector:
+    app: tutoring-service
+  ports:
+    - port: 4002
+      targetPort: 4002

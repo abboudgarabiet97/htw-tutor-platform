@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: htw-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - htw-net
+
+  auth-service:
+    build: ./backend/auth-service
+    container_name: auth-service
+    ports:
+      - "4001:4001"
+    environment:
+      - PORT=4001
+      - MONGO_URI=mongodb://mongo:27017/htw_auth
+      - JWT_SECRET=${JWT_SECRET:-devsecret}
+    depends_on:
+      - mongo
+    networks:
+      - htw-net
+
+  tutoring-service:
+    build: ./backend/tutoring-service
+    container_name: tutoring-service
+    ports:
+      - "4002:4002"
+    environment:
+      - PORT=4002
+      - MONGO_URI=mongodb://mongo:27017/htw_tutoring
+      - JWT_SECRET=${JWT_SECRET:-devsecret}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME:-}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY:-}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET:-}
+      - NOTIFICATION_FUNCTION_URL=${NOTIFICATION_FUNCTION_URL:-}
+    depends_on:
+      - mongo
+    networks:
+      - htw-net
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - REACT_APP_AUTH_API_URL=http://localhost:4001/api
+        - REACT_APP_TUTORING_API_URL=http://localhost:4002/api
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - auth-service
+      - tutoring-service
+    networks:
+      - htw-net
+
+networks:
+  htw-net:
+    driver: bridge
+
+volumes:
+  mongo-data:

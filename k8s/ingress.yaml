@@ -1,0 +1,42 @@
+# Optional: use an Ingress instead of exposing the frontend Service directly
+# as a LoadBalancer. Requires an ingress controller (e.g. NGINX Ingress)
+# installed on the cluster.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: htw-tutor-ingress
+  namespace: htw-tutor
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/auth
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 4001
+          - path: /api/tutors
+            pathType: Prefix
+            backend:
+              service:
+                name: tutoring-service
+                port:
+                  number: 4002
+          - path: /api/bookings
+            pathType: Prefix
+            backend:
+              service:
+                name: tutoring-service
+                port:
+                  number: 4002
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80

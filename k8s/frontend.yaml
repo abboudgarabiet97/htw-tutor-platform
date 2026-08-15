@@ -1,0 +1,38 @@
+# This manifest is provided so the whole stack (including the frontend)
+# can be demonstrated running under Kubernetes, e.g. on Minikube, to
+# satisfy the container orchestration requirement at no cost. For the
+# actual public hosted link, the frontend is deployed to Netlify instead
+# (see the README) since it's free and simpler for a static React build.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: htw-tutor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: <your-dockerhub-username>/htw-frontend:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: htw-tutor
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer

@@ -1,0 +1,184 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f7f8fa;
+  color: #1c1c1e;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #0b3d91;
+  color: white;
+}
+
+.navbar .brand {
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.navbar nav a, .navbar nav .link-button {
+  color: white;
+  margin-left: 1.25rem;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero {
+  text-align: center;
+}
+
+.hero-actions {
+  margin: 1.5rem 0;
+}
+
+.button {
+  display: inline-block;
+  background: #0b3d91;
+  color: white;
+  padding: 0.6rem 1.4rem;
+  border-radius: 6px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+.button.secondary {
+  background: white;
+  color: #0b3d91;
+  border: 1px solid #0b3d91;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.feature {
+  background: white;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.form-page form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+
+.form-page label {
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+.form-page input, .form-page select, .form-page textarea {
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.form-page button {
+  margin-top: 1.5rem;
+}
+
+.error { color: #c0392b; }
+.success { color: #1e824c; }
+
+.filter-input {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.tutor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.tutor-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.tutor-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.tutor-card-body {
+  padding: 0.75rem 1rem;
+}
+
+.price {
+  font-weight: bold;
+  color: #0b3d91;
+}
+
+.tutor-profile {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.tutor-profile img {
+  width: 320px;
+  max-width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin-top: 1rem;
+}
+
+.booking-form input {
+  margin: 0.5rem 0 1rem;
+  padding: 0.5rem;
+}
+
+.booking-list {
+  list-style: none;
+  padding: 0;
+}
+
+.booking-list li {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
